@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Order Confirmation - Look 'N' Style{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <div class="success-icon mb-4">
+                <i class="fas fa-check-circle fa-5x text-success"></i>
+            </div>
+            
+            <h1 class="fw-bold text-success mb-3">Order Placed Successfully!</h1>
+            <p class="lead text-muted mb-4">
+                Thank you for your purchase. Your order has been received and is being processed.
+            </p>
+            
+            <div class="card mx-auto" style="max-width: 500px;">
+                <div class="card-body">
+                    <h5 class="card-title">What's Next?</h5>
+                    <div class="timeline mt-4">
+                        <div class="timeline-item d-flex align-items-center mb-3">
+                            <div class="timeline-icon bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 40px; height: 40px;">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Order Confirmed</h6>
+                                <small class="text-muted">Your order has been received</small>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item d-flex align-items-center mb-3">
+                            <div class="timeline-icon bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 40px; height: 40px;">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Processing</h6>
+                                <small class="text-muted">We're preparing your order</small>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item d-flex align-items-center mb-3">
+                            <div class="timeline-icon bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 40px; height: 40px;">
+                                <i class="fas fa-shipping-fast"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Shipped</h6>
+                                <small class="text-muted">Your order is on its way</small>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item d-flex align-items-center">
+                            <div class="timeline-icon bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 40px; height: 40px;">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Delivered</h6>
+                                <small class="text-muted">Enjoy your new shoes!</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5">
+                <p class="text-muted mb-4">
+                    <strong>Delivery Information:</strong><br>
+                    Standard delivery takes 3-5 business days.<br>
+                    You will receive an email confirmation with tracking details shortly.
+                </p>
+                
+                <div class="action-buttons">
+                    <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                    </a>
+                    <a href="{% url 'home' %}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-home me-2"></i>Go to Homepage
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Contact Support -->
+            <div class="mt-5">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <h6 class="card-title">Need Help?</h6>
+                        <p class="card-text text-muted">
+                            If you have any questions about your order, please contact our customer support.
+                        </p>
+                        <a href="{% url 'contact' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-headset me-2"></i>Contact Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,361 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - Look 'N' Style{% endblock %}
+
+{% block extra_css %}
+<style>
+    .product-image {
+        height: 400px;
+        object-fit: cover;
+    }
+    .thumbnail-img {
+        height: 80px;
+        object-fit: cover;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+    .thumbnail-img:hover,
+    .thumbnail-img.active {
+        border-color: #007bff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Products</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'category_products' product.category.id %}">{{ product.category.name }}</a></li>
+            <li class="breadcrumb-item active">{{ product.name }}</li>
+        </ol>
+    </nav>
+    
+    <div class="row">
+        <!-- Product Images -->
+        <div class="col-lg-6 mb-4">
+            <div class="product-gallery">
+                <!-- Main Image -->
+                <div class="main-image mb-3">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" 
+                             class="img-fluid rounded shadow product-image w-100" id="mainProductImage">
+                    {% else %}
+                        <div class="placeholder-image bg-light d-flex align-items-center justify-content-center rounded shadow" 
+                             style="height: 400px;">
+                            <i class="fas fa-shoe-prints fa-5x text-muted"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Thumbnail Images (placeholder for multiple images) -->
+                <div class="row g-2">
+                    {% if product.image %}
+                        <div class="col-3">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" 
+                                 class="img-fluid rounded thumbnail-img active w-100">
+                        </div>
+                        <div class="col-3">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" 
+                                 class="img-fluid rounded thumbnail-img w-100">
+                        </div>
+                        <div class="col-3">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" 
+                                 class="img-fluid rounded thumbnail-img w-100">
+                        </div>
+                        <div class="col-3">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" 
+                                 class="img-fluid rounded thumbnail-img w-100">
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Details -->
+        <div class="col-lg-6">
+            <div class="product-info">
+                <h1 class="fw-bold mb-3">{{ product.name }}</h1>
+                
+                <!-- Rating (placeholder) -->
+                <div class="rating mb-3">
+                    <span class="text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </span>
+                    <span class="text-muted ms-2">(4.2) • 127 reviews</span>
+                </div>
+                
+                <!-- Price -->
+                <div class="price mb-4">
+                    <span class="h3 text-primary fw-bold">${{ product.price }}</span>
+                    <span class="badge bg-success ms-2">Free Shipping</span>
+                </div>
+                
+                <!-- Stock Status -->
+                <div class="stock-status mb-4">
+                    {% if product.is_in_stock %}
+                        <span class="badge bg-success">
+                            <i class="fas fa-check me-1"></i>In Stock ({{ product.stock }} available)
+                        </span>
+                    {% else %}
+                        <span class="badge bg-danger">
+                            <i class="fas fa-times me-1"></i>Out of Stock
+                        </span>
+                    {% endif %}
+                </div>
+                
+                <!-- Description -->
+                <div class="description mb-4">
+                    <h6>Description</h6>
+                    <p class="text-muted">{{ product.description }}</p>
+                </div>
+                
+                <!-- Size Selection (placeholder) -->
+                <div class="size-selection mb-4">
+                    <h6>Size</h6>
+                    <div class="btn-group" role="group">
+                        <input type="radio" class="btn-check" name="size" id="size7" value="7">
+                        <label class="btn btn-outline-secondary" for="size7">7</label>
+                        
+                        <input type="radio" class="btn-check" name="size" id="size8" value="8">
+                        <label class="btn btn-outline-secondary" for="size8">8</label>
+                        
+                        <input type="radio" class="btn-check" name="size" id="size9" value="9" checked>
+                        <label class="btn btn-outline-secondary" for="size9">9</label>
+                        
+                        <input type="radio" class="btn-check" name="size" id="size10" value="10">
+                        <label class="btn btn-outline-secondary" for="size10">10</label>
+                        
+                        <input type="radio" class="btn-check" name="size" id="size11" value="11">
+                        <label class="btn btn-outline-secondary" for="size11">11</label>
+                    </div>
+                </div>
+                
+                <!-- Add to Cart Form -->
+                {% if product.is_in_stock %}
+                    <form method="POST" action="{% url 'add_to_cart' product.id %}" class="mb-4">
+                        {% csrf_token %}
+                        
+                        <!-- Quantity -->
+                        <div class="quantity-selection mb-3">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <div class="input-group" style="max-width: 150px;">
+                                <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">-</button>
+                                <input type="number" class="form-control text-center" name="quantity" id="quantity" 
+                                       value="1" min="1" max="{{ product.stock }}">
+                                <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">+</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="action-buttons">
+                            <button type="submit" class="btn btn-primary btn-lg me-3">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary btn-lg">
+                                <i class="far fa-heart me-2"></i>Wishlist
+                            </button>
+                        </div>
+                    </form>
+                {% else %}
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        This product is currently out of stock.
+                    </div>
+                {% endif %}
+                
+                <!-- Product Features -->
+                <div class="product-features mb-4">
+                    <h6>Features</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success me-2"></i>Premium Quality Materials</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Comfortable Fit</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Durable Construction</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Non-slip Sole</li>
+                    </ul>
+                </div>
+                
+                <!-- Shipping Info -->
+                <div class="shipping-info">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                <i class="fas fa-truck me-2"></i>Shipping Information
+                            </h6>
+                            <ul class="list-unstyled mb-0">
+                                <li><i class="fas fa-clock me-2 text-primary"></i>Standard delivery: 3-5 business days</li>
+                                <li><i class="fas fa-shipping-fast me-2 text-primary"></i>Express delivery: 1-2 business days</li>
+                                <li><i class="fas fa-gift me-2 text-primary"></i>Free shipping on orders over $50</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Product Tabs -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#description">Description</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#specifications">Specifications</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#reviews">Reviews</button>
+                </li>
+            </ul>
+            
+            <div class="tab-content p-4 border border-top-0">
+                <div class="tab-pane fade show active" id="description">
+                    <h5>Product Description</h5>
+                    <p>{{ product.description }}</p>
+                    <p>This premium shoe combines style and comfort for the modern individual. Crafted with attention to detail and using high-quality materials, it's perfect for both casual and semi-formal occasions.</p>
+                </div>
+                <div class="tab-pane fade" id="specifications">
+                    <h5>Specifications</h5>
+                    <table class="table">
+                        <tr>
+                            <td><strong>Brand</strong></td>
+                            <td>Look 'N' Style</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Category</strong></td>
+                            <td>{{ product.category.name }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Material</strong></td>
+                            <td>Premium Leather/Synthetic</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sole Type</strong></td>
+                            <td>Rubber</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Available Sizes</strong></td>
+                            <td>7, 8, 9, 10, 11</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="reviews">
+                    <h5>Customer Reviews</h5>
+                    <div class="review-item border-bottom pb-3 mb-3">
+                        <div class="d-flex justify-content-between">
+                            <strong>John D.</strong>
+                            <span class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </span>
+                        </div>
+                        <p class="text-muted mt-2">Great quality shoes! Very comfortable and stylish. Highly recommended.</p>
+                    </div>
+                    <div class="review-item border-bottom pb-3 mb-3">
+                        <div class="d-flex justify-content-between">
+                            <strong>Sarah M.</strong>
+                            <span class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </span>
+                        </div>
+                        <p class="text-muted mt-2">Good value for money. The fit is perfect and delivery was quick.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Related Products -->
+    {% if related_products %}
+        <div class="row mt-5">
+            <div class="col-12">
+                <h3 class="fw-bold mb-4">Related Products</h3>
+                <div class="row g-4">
+                    {% for related_product in related_products %}
+                        <div class="col-lg-3 col-md-6">
+                            <div class="card product-card h-100 border-0 shadow-sm">
+                                <div class="position-relative">
+                                    {% if related_product.image %}
+                                        <img src="{{ related_product.image.url }}" class="card-img-top" alt="{{ related_product.name }}" style="height: 200px; object-fit: cover;">
+                                    {% else %}
+                                        <div class="placeholder-image bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                            <i class="fas fa-shoe-prints fa-2x text-muted"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-title">{{ related_product.name }}</h6>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="h6 text-primary mb-0">${{ related_product.price }}</span>
+                                        <a href="{% url 'product_detail' related_product.pk %}" class="btn btn-outline-primary btn-sm">
+                                            View
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function increaseQuantity() {
+    const quantityInput = document.getElementById('quantity');
+    const currentValue = parseInt(quantityInput.value);
+    const maxValue = parseInt(quantityInput.max);
+    
+    if (currentValue < maxValue) {
+        quantityInput.value = currentValue + 1;
+    }
+}
+
+function decreaseQuantity() {
+    const quantityInput = document.getElementById('quantity');
+    const currentValue = parseInt(quantityInput.value);
+    
+    if (currentValue > 1) {
+        quantityInput.value = currentValue - 1;
+    }
+}
+
+// Thumbnail image click handler
+document.addEventListener('DOMContentLoaded', function() {
+    const thumbnails = document.querySelectorAll('.thumbnail-img');
+    const mainImage = document.getElementById('mainProductImage');
+    
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function() {
+            // Remove active class from all thumbnails
+            thumbnails.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked thumbnail
+            this.classList.add('active');
+            
+            // Update main image
+            if (mainImage) {
+                mainImage.src = this.src;
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

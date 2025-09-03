@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - Look 'N' Style{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <h1 class="fw-bold">About Look 'N' Style</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb-item active">About Us</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-lg-6">
+            <h2 class="fw-bold mb-4">Our Story</h2>
+            <p class="lead mb-4">
+                Since 2010, Look 'N' Style has been your trusted partner in finding the perfect footwear. 
+                We believe that the right pair of shoes can transform not just your outfit, but your entire day.
+            </p>
+            <p class="mb-4">
+                What started as a small family business has grown into a leading online destination for quality shoes. 
+                We carefully curate our collection from top brands and emerging designers to bring you the latest 
+                in fashion, comfort, and performance.
+            </p>
+            <div class="row text-center">
+                <div class="col-4">
+                    <div class="stat-item">
+                        <h3 class="fw-bold text-primary">50K+</h3>
+                        <p class="text-muted">Happy Customers</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="stat-item">
+                        <h3 class="fw-bold text-primary">500+</h3>
+                        <p class="text-muted">Products</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="stat-item">
+                        <h3 class="fw-bold text-primary">15+</h3>
+                        <p class="text-muted">Years Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="about-image">
+                <img src="https://via.placeholder.com/600x400/f8f9fa/6c757d?text=Look 'N' Style+Store" 
+                     alt="Look 'N' Style Store" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Values Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="fw-bold text-center mb-5">Our Values</h2>
+            <div class="row g-4">
+                <div class="col-lg-4 text-center">
+                    <div class="value-item">
+                        <i class="fas fa-award fa-3x text-primary mb-3"></i>
+                        <h5>Quality First</h5>
+                        <p class="text-muted">
+                            We source only the highest quality materials and work with skilled craftsmen 
+                            to ensure every pair meets our standards.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="value-item">
+                        <i class="fas fa-heart fa-3x text-primary mb-3"></i>
+                        <h5>Customer Care</h5>
+                        <p class="text-muted">
+                            Your satisfaction is our priority. We provide exceptional customer service 
+                            and support throughout your shopping journey.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="value-item">
+                        <i class="fas fa-leaf fa-3x text-primary mb-3"></i>
+                        <h5>Sustainability</h5>
+                        <p class="text-muted">
+                            We're committed to sustainable practices and work with brands that share 
+                            our vision for a better planet.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Team Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="fw-bold text-center mb-5">Meet Our Team</h2>
+            <div class="row g-4">
+                <div class="col-lg-4 text-center">
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/200x200/f8f9fa/6c757d?text=CEO" 
+                             alt="CEO" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
+                        <h5>John Smith</h5>
+                        <p class="text-primary">CEO & Founder</p>
+                        <p class="text-muted">
+                            With over 20 years in the footwear industry, John leads our vision 
+                            for bringing quality shoes to everyone.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/200x200/f8f9fa/6c757d?text=CMO" 
+                             alt="CMO" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
+                        <h5>Sarah Johnson</h5>
+                        <p class="text-primary">Chief Marketing Officer</p>
+                        <p class="text-muted">
+                            Sarah brings creative vision and customer insights to help us connect 
+                            with shoe lovers worldwide.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/200x200/f8f9fa/6c757d?text=CTO" 
+                             alt="CTO" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
+                        <h5>Mike Chen</h5>
+                        <p class="text-primary">Chief Technology Officer</p>
+                        <p class="text-muted">
+                            Mike ensures our platform provides the best shopping experience 
+                            with cutting-edge technology.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Call to Action -->
+    <div class="row">
+        <div class="col-12">
+            <div class="cta-section bg-primary text-white text-center py-5 rounded">
+                <h3 class="fw-bold mb-3">Ready to Find Your Perfect Shoes?</h3>
+                <p class="lead mb-4">
+                    Explore our collection and discover shoes that match your style and needs.
+                </p>
+                <a href="{% url 'product_list' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-arrow-right me-2"></i>Shop Now
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
