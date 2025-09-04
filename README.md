@@ -95,12 +95,6 @@ A modern and responsive online shoes store built with Django 4+ and Bootstrap 5,
    - Website: http://127.0.0.1:8000/
    - Admin Panel: http://127.0.0.1:8000/admin/
 
-## Default Admin Credentials
-
-- **Username**: admin
-- **Email**: admin@stepstyle.com
-- **Password**: admin123
-
 ## Project Structure
 
 ```
